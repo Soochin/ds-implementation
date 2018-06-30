@@ -1,6 +1,6 @@
 // MinHeap.hpp
 //
-// Author: Soochin Kang
+// Author: Soochin Kang, Trevor Dinh
 // Add authors if you are implementing this file
 //
 // Vesion1 Date: 6/17/2018
@@ -169,6 +169,7 @@ void MinHeap<T>::removeMin()
 template <typename T>
 bool MinHeap<T>::isEmpty() const
 {
+    return buf.size() == 0;
 }
 
 
@@ -193,6 +194,7 @@ bool MinHeap<T>::contains(const T& element) const
 template <typename T>
 unsigned int MinHeap<T>::size() const noexcept
 {
+    return buf.size();
 }
 
 
