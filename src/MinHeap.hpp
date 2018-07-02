@@ -92,6 +92,25 @@ public:
 private:
 // implement any private functions that may help implement minheap.
 
+
+    //may consider throwing errors when no such parent
+    //or left/right child exists
+
+
+    //https://courses.csail.mit.edu/6.006/fall10/handouts/recitation10-8.pdf
+    //this provides functions for max-heap, but it will be helpful in implementing minheap in C++
+    
+
+    //return the parent of the node at this particular index.
+    int parent(const int index) const;
+
+    //return the left child of the node at this particular index.
+    int left(const int index) const;
+
+    //return the right child of the node at this particular index.
+    int right(const int index) const;
+
+
 private:
 // add any private instance variables that may be helpful.
 // here, size variable is not needed since we have size() function
@@ -157,6 +176,9 @@ MinHeap<T>& MinHeap<T>::operator=(MinHeap&& mh) noexcept
 template <typename T>
 const T& MinHeap<T>::getMin() const
 {
+    if (isEmpty())
+        throw MinHeapException("Heap is empty");
+    return buf[0];
 }
 
 
@@ -205,6 +227,23 @@ int MinHeap<T>::height() const
 
 
 // From here, implement any private functions that may help you implement MinHeap
+
+template <typename T>
+int MinHeap<T>::parent(const int index) const
+{
+}
+
+template <typename T>
+int MinHeap<T>::left(const int index) const
+{
+}
+
+template <typename T>
+int MinHeap<T>::right(const int index) const
+{
+}
+
+
 
 
 
