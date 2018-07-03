@@ -131,7 +131,7 @@ MinHeap<T>::MinHeap() noexcept
 
 template <typename T>
 MinHeap<T>::MinHeap(int* arr, int length)
-    : head(arr)
+    : head(begin(arr), end(arr))
 {
 }
 
