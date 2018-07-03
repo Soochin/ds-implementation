@@ -115,7 +115,7 @@ private:
 // add any private instance variables that may be helpful.
 // here, size variable is not needed since we have size() function
 // and we are using a vector for the container.
-	std::vector<T> buf; 
+	std::vector<T> head; 
 };
 
 
@@ -131,6 +131,7 @@ MinHeap<T>::MinHeap() noexcept
 
 template <typename T>
 MinHeap<T>::MinHeap(int* arr, int length)
+    : head(arr)
 {
 }
 
