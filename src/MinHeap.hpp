@@ -115,7 +115,7 @@ private:
 // add any private instance variables that may be helpful.
 // here, size variable is not needed since we have size() function
 // and we are using a vector for the container.
-	std::vector<T> head; 
+	std::vector<T> heap; 
 };
 
 
@@ -131,8 +131,8 @@ MinHeap<T>::MinHeap() noexcept
 
 template <typename T>
 MinHeap<T>::MinHeap(int* arr, int length)
-    : head(begin(arr), end(arr))
 {
+    heap.assign(arr, arr + length);
 }
 
 
@@ -179,7 +179,7 @@ const T& MinHeap<T>::getMin() const
 {
     if (isEmpty())
         throw MinHeapException("Heap is empty");
-    return buf[0];
+    return heap[0];
 }
 
 
@@ -192,7 +192,7 @@ void MinHeap<T>::removeMin()
 template <typename T>
 bool MinHeap<T>::isEmpty() const
 {
-    return buf.size() == 0;
+    return heap.size() == 0;
 }
 
 
@@ -217,7 +217,7 @@ bool MinHeap<T>::contains(const T& element) const
 template <typename T>
 unsigned int MinHeap<T>::size() const noexcept
 {
-    return buf.size();
+    return heap.size();
 }
 
 
