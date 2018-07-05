@@ -18,6 +18,7 @@
 
 #include <vector>
 #include "MinHeapException.hpp"
+#include <math.h>
 
 template <typename T>
 class MinHeap {
@@ -109,6 +110,8 @@ private:
 
     //return the right child of the node at this particular index.
     int right(const int index) const;
+
+    void heapify(int index);
 
 
 private:
@@ -232,18 +235,31 @@ int MinHeap<T>::height() const
 template <typename T>
 int MinHeap<T>::parent(const int index) const
 {
+    if (index == 0)
+        return NULL;
+    return (int)floor(i - 1 / 2);
 }
 
 template <typename T>
 int MinHeap<T>::left(const int index) const
 {
+    if (2 * i + 1 < heap.size())
+        return 2 * i;
+    return NULL;
 }
 
 template <typename T>
 int MinHeap<T>::right(const int index) const
 {
+    if (2 * i + 2 < heap.size())
+        return 2 * i + 2;
+    return NULL;
 }
 
+template <typename T>
+void MinHeap<T>::heapify(int index)
+{
+}
 
 
 
