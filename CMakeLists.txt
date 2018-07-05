@@ -6,6 +6,7 @@ set(GTEST_DIR "lib/googletest-master")
 add_subdirectory(${GTEST_DIR} build)
 include_directories(${GTEST_DIR}/include ${GTEST_DIR})
 include_directories(src test)
+set(CMAKE_VERBOSE_MAKEFILE ON)
 
 
 

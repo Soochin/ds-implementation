@@ -17,3 +17,11 @@ TEST(MinHeapTest, correctEmptySize)
     ASSERT_EQ(h.size(), 0);
 
 }
+
+TEST(MinHeapTest, addOne)
+{
+    MinHeap<int> h = MinHeap<int>();
+    h.add(1);
+    ASSERT_EQ(h.isEmpty(), false);
+    ASSERT_EQ(h.size(),1);
+}

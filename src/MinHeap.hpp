@@ -19,6 +19,7 @@
 #include <vector>
 #include "MinHeapException.hpp"
 #include <math.h>
+#include <algorithm>
 
 template <typename T>
 class MinHeap {
@@ -111,7 +112,12 @@ private:
     //return the right child of the node at this particular index.
     int right(const int index) const;
 
+    //heapify algorithm
     void heapify(int index);
+
+    //decrease key, not sure if necessary though
+    void decrease_key(int index, const T& element);
+
 
 
 private:
@@ -202,6 +208,8 @@ bool MinHeap<T>::isEmpty() const
 template <typename T>
 void MinHeap<T>::add(const T& element)
 {
+    heap.push_back(element);
+    heapify(heap.size()-1);
 }
 
 
@@ -214,6 +222,7 @@ void MinHeap<T>::remove(const T& element)
 template <typename T>
 bool MinHeap<T>::contains(const T& element) const
 {
+    return std::find(heap.begin(),heap.end(), element);
 }
 
 
@@ -236,29 +245,42 @@ template <typename T>
 int MinHeap<T>::parent(const int index) const
 {
     if (index == 0)
-        return NULL;
-    return (int)floor(i - 1 / 2);
+        return -1;
+    return (int)floor(index - 1 / 2);
 }
 
 template <typename T>
 int MinHeap<T>::left(const int index) const
 {
-    if (2 * i + 1 < heap.size())
-        return 2 * i;
-    return NULL;
+    if (2 * index + 1 < heap.size())
+        return 2 * index;
+    return -1;
 }
 
 template <typename T>
 int MinHeap<T>::right(const int index) const
 {
-    if (2 * i + 2 < heap.size())
-        return 2 * i + 2;
-    return NULL;
+    if (2 * index + 2 < heap.size())
+        return 2 * index + 2;
+    return -1;
 }
 
 template <typename T>
 void MinHeap<T>::heapify(int index)
 {
+    int l = left(index);
+    int r = right(index);
+    int smaller;
+    if (l != -1 && l < heap.size() && heap[l] < heap[index])
+        smaller = l;
+    else
+        smaller = index;
+    if (r != -1 && r < heap.size() && heap[r] < heap[index])
+        smaller = r;
+    if (smaller != index) {
+        std::swap(heap[smaller], heap[index]);
+        heapify(smaller);
+    }
 }
 
 
