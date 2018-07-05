@@ -27,7 +27,7 @@ template <typename T>
 class MinHeap {
 public:
 	// default constructor
-	MinHeap() noexcept;
+	MinHeap() noexcept = default;
 
 	// constructor with int array and length
 	MinHeap(int* arr, int length);
@@ -36,7 +36,7 @@ public:
 	MinHeap(const std::vector<int>& v);
 
 	// destructor
-	virtual ~MinHeap() noexcept;
+	virtual ~MinHeap() noexcept = default;
 
 	// copy constructor
 	MinHeap(const MinHeap& mh);
@@ -145,11 +145,6 @@ private:
 // The reason I am implementing function bodies in the header file
 // is because this is a header file for a template class.
 
-template <typename T>
-MinHeap<T>::MinHeap() noexcept
-{
-}
-
 
 template <typename T>
 MinHeap<T>::MinHeap(int* arr, int length)
@@ -161,30 +156,28 @@ MinHeap<T>::MinHeap(int* arr, int length)
 template <typename T>
 MinHeap<T>::MinHeap(const std::vector<int>& v)
 {
-}
-
-
-template <typename T>
-MinHeap<T>::~MinHeap() noexcept
-{
+	heap = v;
 }
 
 
 template <typename T>
 MinHeap<T>::MinHeap(const MinHeap& mh)
 {
+	heap = mh.heap;
 }
 
 
 template <typename T>
 MinHeap<T>::MinHeap(MinHeap&& mh) noexcept
 {
+	heap = std::move(mh.heap);
 }
 
 
 template <typename T>
 MinHeap<T>& MinHeap<T>::operator=(const MinHeap& mh)
 {
+	heap = mh.heap;
     return *this;
 }
 
@@ -192,6 +185,7 @@ MinHeap<T>& MinHeap<T>::operator=(const MinHeap& mh)
 template <typename T>
 MinHeap<T>& MinHeap<T>::operator=(MinHeap&& mh) noexcept
 {
+	heap = std::move(mh.heap);
     return *this;
 }
 
