@@ -20,6 +20,8 @@
 #include "MinHeapException.hpp"
 #include <math.h>
 #include <algorithm>
+#include <iostream>
+#include <string>
 
 template <typename T>
 class MinHeap {
@@ -91,6 +93,9 @@ public:
 	// there are n elements in the heap. 
 	int height() const;
 
+    //debugging function to visualize vector
+    void print();
+
 private:
 // implement any private functions that may help implement minheap.
 
@@ -117,6 +122,8 @@ private:
 
     //decrease key, not sure if necessary though
     void decrease_key(int index, const T& element);
+
+
 
 
 
@@ -209,7 +216,7 @@ template <typename T>
 void MinHeap<T>::add(const T& element)
 {
     heap.push_back(element);
-    heapify(heap.size()-1);
+    decrease_key(heap.size()-1, element);
 }
 
 
@@ -222,7 +229,7 @@ void MinHeap<T>::remove(const T& element)
 template <typename T>
 bool MinHeap<T>::contains(const T& element) const
 {
-    return std::find(heap.begin(),heap.end(), element);
+    return std::find(heap.begin(),heap.end(), element) != heap.end();
 }
 
 
@@ -246,7 +253,7 @@ int MinHeap<T>::parent(const int index) const
 {
     if (index == 0)
         return -1;
-    return (int)floor(index - 1 / 2);
+    return (int)floor((index - 1) / 2);
 }
 
 template <typename T>
@@ -281,6 +288,32 @@ void MinHeap<T>::heapify(int index)
         std::swap(heap[smaller], heap[index]);
         heapify(smaller);
     }
+}
+
+template <typename T>
+void MinHeap<T>::decrease_key(int index, const T &element)
+{
+    if (element > heap[index])
+        throw MinHeapException("New key must be smaller than current key");
+    if (heap[index] != element)
+        heap[index] = element;
+    int i = index;
+
+    while (i > 0 && heap[parent(i)] > heap[i])
+    {
+        std::swap(heap[parent(i)], heap[i]);
+        i = parent(i);
+    }
+}
+
+template <typename T>
+void MinHeap<T>::print()
+{
+    std::cout << "[";
+    for (auto e : heap) {
+        std::cout << e << std::endl;
+    }
+    std::cout << "]" << std::endl;
 }
 
 
