@@ -15,6 +15,7 @@ add_executable(ds_implementation
         src/MinHeapException.hpp
         src/MinPriorityQueue.hpp
         test/main.cpp
+        test/MinHeap_Test.cpp
         test/sample_test.cpp)
 
 
