@@ -123,6 +123,12 @@ private:
     //decrease key, not sure if necessary though
     void decrease_key(int index, const T& element);
 
+    //percolate a node upwards
+    void sift_up(const int index);
+
+    //percolate a node downwards
+    void sift_down(const int index);
+
 
 
 
