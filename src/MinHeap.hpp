@@ -103,11 +103,6 @@ private:
     //may consider throwing errors when no such parent
     //or left/right child exists
 
-
-    //https://courses.csail.mit.edu/6.006/fall10/handouts/recitation10-8.pdf
-    //this provides functions for max-heap, but it will be helpful in implementing minheap in C++
-    
-
     //return the parent of the node at this particular index.
     int parent(const int index) const;
 
@@ -117,17 +112,30 @@ private:
     //return the right child of the node at this particular index.
     int right(const int index) const;
 
+    //build heap from initial values in vector (for constructor use)
+    void build_heap();
+
     //heapify algorithm
     void heapify(int index);
 
     //decrease key, not sure if necessary though
     void decrease_key(int index, const T& element);
 
+    //return the index of the smaller child at a given index
+    int smaller_child(const int index);
+
     //percolate a node upwards
     void sift_up(const int index);
 
     //percolate a node downwards
     void sift_down(const int index);
+
+    //return true if the index is within the heap
+    //e.g. greater than/equal to 0 and less than heap size.
+    bool within_heap(const int index);
+
+    //return true if index == 0
+    bool is_root(const int index);
 
 
 
@@ -156,7 +164,9 @@ MinHeap<T>::MinHeap(int* arr, int length)
 template <typename T>
 MinHeap<T>::MinHeap(const std::vector<int>& v)
 {
+
 	heap = v;
+    build_heap();
 }
 
 
@@ -216,7 +226,7 @@ template <typename T>
 void MinHeap<T>::add(const T& element)
 {
     heap.push_back(element);
-    decrease_key(heap.size()-1, element);
+    sift_up(heap.size()-1);
 }
 
 
@@ -243,6 +253,7 @@ unsigned int MinHeap<T>::size() const noexcept
 template <typename T>
 int MinHeap<T>::height() const
 {
+    return (int)ceil(log2(heap.size() + 1)) - 1;
 }
 
 
@@ -260,7 +271,7 @@ template <typename T>
 int MinHeap<T>::left(const int index) const
 {
     if (2 * index + 1 < heap.size())
-        return 2 * index;
+        return 2 * index + 1;
     return -1;
 }
 
@@ -273,8 +284,21 @@ int MinHeap<T>::right(const int index) const
 }
 
 template <typename T>
+void MinHeap<T>::build_heap()
+{
+    for (int i = (int)((heap.size()) / 2); i >= 0; i--)
+    {
+        sift_down(i);
+    }
+}
+
+
+template <typename T>
 void MinHeap<T>::heapify(int index)
 {
+
+    //essentially the sift_down function in disguise; may refactor code to account for this
+
     int l = left(index);
     int r = right(index);
     int smaller;
@@ -304,6 +328,55 @@ void MinHeap<T>::decrease_key(int index, const T &element)
         std::swap(heap[parent(i)], heap[i]);
         i = parent(i);
     }
+}
+
+template <typename T>
+int MinHeap<T>::smaller_child(const int index)
+{
+    if (left(index) == -1 && right(index) == -1)
+        return -1;
+    if (right(index) == -1)
+        return left(index);
+
+    return heap[left(index)] < heap[right(index)] ? left(index) : right(index);
+}
+
+template <typename T>
+void MinHeap<T>::sift_up(const int index)
+{
+    if (is_root(index) || index == -1)
+        return;
+    if (heap[parent(index)] > heap[index])
+    {
+        std::swap(heap[parent(index)], heap[index]);
+        sift_up(parent(index));
+    }
+}
+
+template <typename T>
+void MinHeap<T>::sift_down(const int index)
+{
+    if (within_heap(2 * index + 1))
+    {
+        int child = smaller_child(index);
+        if (child != -1 && heap[child] < heap[index])
+        {
+            std::swap(heap[child], heap[index]);
+            sift_down(child);
+        }
+    }
+}
+
+template <typename T>
+bool MinHeap<T>::within_heap(const int index)
+{
+    return index >= 0 && index < heap.size();
+}
+
+template <typename T>
+bool MinHeap<T>::is_root(const int index)
+{
+    return index == 0;
 }
 
 template <typename T>

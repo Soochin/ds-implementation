@@ -36,6 +36,10 @@ TEST(MinHeapTest, addTwo)
 	h.print();
 }
 
-TEST(MinHeap_Test, nameATest)
+TEST(MinHeap_Test, buildHeap)
 {
+	//source: https://www.cs.princeton.edu/~wayne/kleinberg-tardos/pdf/DemoHeapify.pdf
+	std::vector<int> sample = {8,12,9,7,22,3,26,14,11,15,22};
+	MinHeap<int> h = MinHeap<int>(sample);
+	h.print();
 }
