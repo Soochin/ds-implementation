@@ -145,6 +145,7 @@ TEST(MinHeap_Test, MinHeapCanBeCopyAssigned_WithSeparateContents)
 
 TEST(MinHeap_Test, MinHeapCanBeMoveAssigned_SwappingContents)
 {
+
 	MinHeap<int> mh1;
     for (int i = 9; i <= 30; i+=2) {
         mh1.add(i);
@@ -170,4 +171,9 @@ TEST(MinHeap_Test, MinHeapCanBeMoveAssigned_SwappingContents)
         EXPECT_FALSE(mh1.contains(i));
         EXPECT_TRUE(mh2.contains(i));
     }
+
+}
+
+TEST(MinHeap_Test, DecreaseKeyMaintansHeapProperty)
+{
 }
