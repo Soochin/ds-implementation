@@ -43,3 +43,19 @@ TEST(MinHeap_Test, buildHeap)
 	MinHeap<int> h = MinHeap<int>(sample);
 	h.print();
 }
+
+
+TEST(MinHeap_Test, extractMin)
+{
+    //source: http://www.algolist.net/Data_structures/Binary_heap/Remove_minimum
+
+    std::vector<int> sample = {1,3,6,5,9,8};
+    MinHeap<int> h = MinHeap<int>(sample);
+    h.print();
+	ASSERT_EQ(h.getMin(), 1);
+	h.removeMin();
+	h.print();
+	ASSERT_EQ(h.size(), 5);
+	ASSERT_EQ(h.getMin(), 3);
+
+}

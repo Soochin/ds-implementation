@@ -30,10 +30,10 @@ public:
 	MinHeap() noexcept = default;
 
 	// constructor with int array and length
-	MinHeap(int* arr, int length);
+	MinHeap(T* arr, int length);
 
 	// constructor with a vector
-	MinHeap(const std::vector<int>& v);
+	MinHeap(const std::vector<T>& v);
 
 	// destructor
 	virtual ~MinHeap() noexcept = default;
@@ -155,14 +155,14 @@ private:
 
 
 template <typename T>
-MinHeap<T>::MinHeap(int* arr, int length)
+MinHeap<T>::MinHeap(T* arr, int length)
 {
     heap.assign(arr, arr + length);
 }
 
 
 template <typename T>
-MinHeap<T>::MinHeap(const std::vector<int>& v)
+MinHeap<T>::MinHeap(const std::vector<T>& v)
 {
 
 	heap = v;
@@ -212,6 +212,9 @@ const T& MinHeap<T>::getMin() const
 template <typename T>
 void MinHeap<T>::removeMin()
 {
+    std::swap(heap[0], heap[heap.size()-1]);
+    heap.pop_back();
+    sift_down(0); //was going to use heapify but heapify broke on the removeMin test case
 }
 
 
@@ -308,7 +311,8 @@ void MinHeap<T>::heapify(int index)
         smaller = index;
     if (r != -1 && r < heap.size() && heap[r] < heap[index])
         smaller = r;
-    if (smaller != index) {
+    if (smaller != index)
+    {
         std::swap(heap[smaller], heap[index]);
         heapify(smaller);
     }
