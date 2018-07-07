@@ -89,7 +89,7 @@ TEST(MinHeap_Test, MinHeapCanBeCopyConstructed_WithSeparateContents)
 TEST(MinHeap_Test, MinHeapCanBeMoveConstructed_LeavingOriginalEmpty)
 {
 	MinHeap<int> mh1;
-	for (int i = 1; i < 7; ++i) {
+	for (int i = 1; i <= 7; ++i) {
 		mh1.add(i);
 	}
 

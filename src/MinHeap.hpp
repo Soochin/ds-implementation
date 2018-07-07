@@ -180,7 +180,7 @@ MinHeap<T>::MinHeap(const MinHeap& mh)
 template <typename T>
 MinHeap<T>::MinHeap(MinHeap&& mh) noexcept
 {
-	heap = std::move(mh.heap);
+	std::swap(heap, mh.heap);
 }
 
 
@@ -195,7 +195,7 @@ MinHeap<T>& MinHeap<T>::operator=(const MinHeap& mh)
 template <typename T>
 MinHeap<T>& MinHeap<T>::operator=(MinHeap&& mh) noexcept
 {
-	heap = std::move(mh.heap);
+	std::swap(heap, mh.heap);
     return *this;
 }
 
