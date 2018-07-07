@@ -214,7 +214,7 @@ void MinHeap<T>::removeMin()
 {
     std::swap(heap[0], heap[heap.size()-1]);
     heap.pop_back();
-    sift_down(0); //was going to use heapify but heapify broke on the removeMin test case
+    heapify(0); //was going to use heapify but heapify broke on the removeMin test case
 }
 
 
@@ -305,11 +305,11 @@ void MinHeap<T>::heapify(int index)
     int l = left(index);
     int r = right(index);
     int smaller;
-    if (l != -1 && l < heap.size() && heap[l] < heap[index])
+    if (within_heap(l) && heap[l] < heap[index])
         smaller = l;
     else
         smaller = index;
-    if (r != -1 && r < heap.size() && heap[r] < heap[index])
+    if (within_heap(r) && heap[r] < heap[smaller])
         smaller = r;
     if (smaller != index)
     {
