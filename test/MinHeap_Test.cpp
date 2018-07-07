@@ -8,6 +8,12 @@ TEST(MinHeap_Test, sizeIsZeroWhenDefaultConstructed)
 	EXPECT_EQ(0, mh.size());
 	EXPECT_TRUE(mh.isEmpty());
 }
+
+TEST(MinHeap_Test, heightIsNegativeOneWhenDefaultConstructed)
+{
+}
+
+
 TEST(MinHeapTest, correctEmptySize)
 {
 	MinHeap<int> h = MinHeap<int>();
@@ -57,5 +63,20 @@ TEST(MinHeap_Test, extractMin)
 	h.print();
 	ASSERT_EQ(h.size(), 5);
 	ASSERT_EQ(h.getMin(), 3);
+}
 
+TEST(MinHeap_Test, MinHeapCanBeCopyConstructed_WithSeparateContents)
+{
+}
+
+TEST(MinHeap_Test, MinHeapCanBeMoveConstructed_LeavingOriginalEmpty)
+{
+}
+
+TEST(MinHeap_Test, MinHeapCanBeCopyAssigned_WithSeparateContents)
+{
+}
+
+TEST(MinHeap_Test, MinHeapCanBeMoveAssigned_SwappingContents)
+{
 }
