@@ -22,6 +22,7 @@
 #include <algorithm>
 #include <iostream>
 #include <string>
+#include <climits>
 
 template <typename T>
 class MinHeap {
@@ -75,7 +76,7 @@ public:
 	// remove() removes an element in the heap. If the element does not exist
 	// in the heap, this function will throw MinHeapException. This function 
 	// always runs in O(log n) time when there are n elements in the heap.
-	void remove(const T& element);
+	void remove(const int index);
 
 
 	// contains() returns true if the given element is already in the heap,
@@ -95,6 +96,9 @@ public:
 
     //debugging function to visualize vector
     void print();
+
+    //debugging function to verify heap
+    bool is_heap();
 
 private:
 // implement any private functions that may help implement minheap.
@@ -136,6 +140,8 @@ private:
 
     //return true if index == 0
     bool is_root(const int index);
+
+
 
 
 
@@ -234,8 +240,9 @@ void MinHeap<T>::add(const T& element)
 
 
 template <typename T>
-void MinHeap<T>::remove(const T& element)
+void MinHeap<T>::remove(const int index)
 {
+    decrease_key(index, INT_MIN);
 }
 
 
@@ -321,17 +328,10 @@ void MinHeap<T>::heapify(int index)
 template <typename T>
 void MinHeap<T>::decrease_key(int index, const T &element)
 {
-    if (element > heap[index])
+    if (element >= heap[index])
         throw MinHeapException("New key must be smaller than current key");
-    if (heap[index] != element)
-        heap[index] = element;
-    int i = index;
-
-    while (i > 0 && heap[parent(i)] > heap[i])
-    {
-        std::swap(heap[parent(i)], heap[i]);
-        i = parent(i);
-    }
+    heap[index] = element;
+    sift_up(index);
 }
 
 template <typename T>
