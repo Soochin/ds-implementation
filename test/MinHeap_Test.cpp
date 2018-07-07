@@ -67,16 +67,107 @@ TEST(MinHeap_Test, extractMin)
 
 TEST(MinHeap_Test, MinHeapCanBeCopyConstructed_WithSeparateContents)
 {
+	MinHeap<int> mh1;
+	for (int i = 1; i <= 10; ++i) {
+		mh1.add(i);
+	}
+
+	MinHeap<int> mh2 = mh1; // copy construct
+
+	EXPECT_EQ(10, mh1.size());
+	EXPECT_EQ(10, mh2.size());
+
+	for (int i = 1; i <= 10; ++i) {
+		EXPECT_TRUE(mh2.contains(i));
+	}
+
+	for (int i = 11; i <= 20; ++i) {
+		EXPECT_FALSE(mh2.contains(i));
+	}
 }
 
 TEST(MinHeap_Test, MinHeapCanBeMoveConstructed_LeavingOriginalEmpty)
 {
+	MinHeap<int> mh1;
+	for (int i = 1; i < 7; ++i) {
+		mh1.add(i);
+	}
+
+	MinHeap<int> mh2 = std::move(mh1);
+
+	EXPECT_EQ(0, mh1.size());
+
+	EXPECT_EQ(7, mh2.size());
+
+	for (int i = 1; i <= 7; ++i) {
+        EXPECT_TRUE(mh2.contains(i));
+    }
+
+    for (int i = 9; i <= 20; ++i) {
+        EXPECT_FALSE(mh2.contains(i));
+    }
 }
 
 TEST(MinHeap_Test, MinHeapCanBeCopyAssigned_WithSeparateContents)
 {
+	MinHeap<int> mh1;
+    for (int i = 9; i <= 20; i+=2) {
+        mh1.add(i);
+    }
+
+    MinHeap<int> mh2;
+    for (int i = 1; i <= 8; ++i) {
+        mh2.add(i);
+    }
+
+    mh1 = mh2;
+
+    EXPECT_EQ(8, mh1.size());
+
+    EXPECT_EQ(8, mh2.size());
+
+    mh2.add(100);
+    
+    EXPECT_TRUE(mh2.contains(100));
+    EXPECT_FALSE(mh1.contains(100));
+
+
+    for (int i = 1; i <= 8; ++i) {
+        EXPECT_TRUE(mh1.contains(i));
+        EXPECT_TRUE(mh2.contains(i));
+    }
+
+    for (int i = 9; i <= 20; i+=2) {
+        EXPECT_FALSE(mh1.contains(i));
+        EXPECT_FALSE(mh2.contains(i));
+    }
 }
 
 TEST(MinHeap_Test, MinHeapCanBeMoveAssigned_SwappingContents)
 {
+	MinHeap<int> mh1;
+    for (int i = 9; i <= 30; i+=2) {
+        mh1.add(i);
+    }
+
+    MinHeap<int> mh2;
+    for (int i = 1; i <= 7; ++i) {
+        mh2.add(i);
+    }
+
+    mh1 = std::move(mh2);
+
+    EXPECT_EQ(7, mh1.size());
+
+    EXPECT_EQ(11, mh2.size());
+
+    for (int i = 1; i <= 7; ++i) {
+        EXPECT_TRUE(mh1.contains(i));
+        EXPECT_FALSE(mh2.contains(i));
+    }
+
+    for (int i = 9; i <= 30; i+=2) {
+        EXPECT_FALSE(mh1.contains(i));
+        EXPECT_TRUE(mh2.contains(i));
+    }
 }
