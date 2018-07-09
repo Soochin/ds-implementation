@@ -240,8 +240,7 @@ private:
     //heapify algorithm
     void heapify(int index);
 
-    //decrease key, not sure if necessary though
-    void decrease_key(int index, const T& element);
+
 
     //return the index of the smaller child at a given index
     int smaller_child(const int index);
@@ -336,9 +335,7 @@ const T& MinHeap<T>::getMin() const
 template <typename T>
 void MinHeap<T>::removeMin()
 {
-    std::swap(heap[0], heap[heap.size()-1]);
-    heap.pop_back();
-    heapify(0); //was going to use heapify but heapify broke on the removeMin test case
+    remove(0);
 }
 
 
@@ -360,8 +357,14 @@ void MinHeap<T>::add(const T& element)
 template <typename T>
 void MinHeap<T>::remove(const int index)
 {
-    decrease_key(index, INT_MIN);
-    removeMin();
+    if (index == heap.size()-1)
+    {
+        heap.pop_back();
+        return;
+    }
+    std::swap(heap[index], heap[heap.size()-1]);
+    heap.pop_back();
+    heapify(index); //sift_down should work too; still prototyping heapify
 }
 
 
@@ -444,14 +447,6 @@ void MinHeap<T>::heapify(int index)
     }
 }
 
-template <typename T>
-void MinHeap<T>::decrease_key(int index, const T &element)
-{
-    if (element >= heap[index])
-        throw MinHeapException("New key must be smaller than current key");
-    heap[index] = element;
-    sift_up(index);
-}
 
 template <typename T>
 int MinHeap<T>::smaller_child(const int index)
