@@ -361,6 +361,7 @@ template <typename T>
 void MinHeap<T>::remove(const int index)
 {
     decrease_key(index, INT_MIN);
+    removeMin();
 }
 
 

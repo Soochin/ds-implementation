@@ -11,6 +11,7 @@ include_directories(src test)
 
 
 add_executable(ds_implementation
+        src/IteratorException.hpp
         src/MinHeap.hpp
         src/MinHeapException.hpp
         src/MinPriorityQueue.hpp
