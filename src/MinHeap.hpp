@@ -18,6 +18,8 @@
 
 #include <vector>
 #include "MinHeapException.hpp"
+#include "IteratorException.hpp"
+
 #include <math.h>
 #include <algorithm>
 #include <iostream>
@@ -26,6 +28,11 @@
 
 template <typename T>
 class MinHeap {
+	// Iterator definitions
+public:
+	class Iterator;
+	class ConstIterator;
+
 public:
 	// default constructor
 	MinHeap() noexcept = default;
@@ -100,9 +107,120 @@ public:
     //debugging function to verify heap
     bool is_heap();
 
-private:
-// implement any private functions that may help implement minheap.
 
+    // iterator() creates a new Iterator over this heap. It will
+    // initially be referring to the first (root / minimum) value
+    // in the heap, unless the heap is empty, in which case it will considered
+    // both "past start" and "past end."
+    // The method of iteration is preorder traversal.
+    Iterator iterator();
+
+
+    // constIterator(). An iterator that cannot modify the heap.
+    // Only the traversal is valid.
+    ConstIterator constIterator() const;
+
+
+public:
+	// Public Iterator section
+
+	class IteratorBase {
+	public:
+		// Initializes a newly-constructed IteratorBase to operate on
+		// the given heap. It will initially be referring to the first
+		// value in the heap (the root, minimum), unless the heap is empty,
+		// in which case it will be considered to both "past start" and "past end."
+		IteratorBase(const MinHeap& mh) noexcept;
+
+
+		// moveToNext() moves this iterator forward to the next value in the
+		// heap. If the iterator is referring to the last value, it moves
+		// to the "past end" position. If it is already at the "past end"
+		// position, and IteratorException will be thrown.
+		void moveToNext();
+
+
+		// moveToPrevious() moves this iterator backward to the previous
+        // value in the heap.  If the iterator is referring to the first
+        // value, it moves to the "past start" position.  If it is already
+        // at the "past start" position, an IteratorException will be thrown.
+        void moveToPrevious();
+
+
+        // isPastStart() returns true if this iterator is in the "past
+        // start" position, false otherwise.
+		bool isPastStart() const noexcept;
+
+
+		// isPastEnd() returns true if this iterator is in the "past end"
+        // position, false otherwise.
+		bool isPastEnd() const noexcept;
+
+	protected:
+		// this is to access the member variables and member functions.
+		const MinHeap<T>& mh;
+		int curIndex;
+	};
+
+
+	class ConstIterator : public IteratorBase {
+		// Initializes a newly-constructed ConstIterator to operate on
+        // the given heap. It will initially be referring to the first
+        // value (root, minumum) in the heap, unless the heap is empty, in which case
+        // it will be considered to be both "past start" and "past end".
+		ConstIterator(const MinHeap& mh) noexcept;
+
+		// value() returns the value that the iterator is currently
+        // referring to.  If the iterator is in the "past start" or
+        // "past end" positions, an IteratorException will be thrown.
+		const T& value() const;
+	};
+
+
+	class Iterator : public IteratorBase
+    {
+    public:
+        // Initializes a newly-constructed Iterator to operate on the
+        // given heap.  It will initially be referring to the first
+        // value (root, minimum) in the heap, unless the heap is empty, in which case
+        // it will be considered to be both "past start" and "past end".
+        Iterator(MinHeap& list) noexcept;
+
+
+        // value() returns the value that the iterator is currently
+        // referring to. If the iterator is in the "past start" or
+        // "past end" positions, an IteratorException will be thrown.
+        T& value() const;
+
+
+        // insertBefore() inserts a new value into the heap before
+        // the one to which the iterator currently refers. If the
+        // iterator is in the "past start" position, an IteratorException
+        // is thrown.
+        void insertBefore(const T& value);
+
+
+        // insertAfter() inserts a new value into the heap after
+        // the one to which the iterator currently refers. If the
+        // iterator is in the "past end" position, an IteratorException
+        // is thrown.
+        void insertAfter(const T& value);
+
+
+        // remove() removes the value to which this iterator refers,
+        // moving the iterator to refer to either the value after it
+        // (if moveToNextAfterward is true) or before it (if
+        // moveToNextAfterward is false). If the iterator is in the
+        // "past start" or "past end" position, an IteratorException
+        // is thrown.
+        // After removing, heap should be maintained as a heap.
+        void remove(bool moveToNextAfterward = true);
+    };
+
+
+
+private:
+	// implement any private functions that may help implement minheap.
 
     //may consider throwing errors when no such parent
     //or left/right child exists
@@ -394,6 +512,88 @@ void MinHeap<T>::print()
 }
 
 
+template <typename T>
+typename MinHeap<T>::Iterator MinHeap<T>::iterator()
+{
+}
+
+
+template <typename T>
+typename MinHeap<T>::ConstIterator MinHeap<T>::constIterator() const
+{
+}
+
+
+template <typename T>
+MinHeap<T>::IteratorBase::IteratorBase(const MinHeap& mh) noexcept
+{
+}
+
+
+template <typename T>
+void MinHeap<T>::IteratorBase::moveToNext()
+{
+}
+
+
+template <typename T>
+void MinHeap<T>::IteratorBase::moveToPrevious()
+{
+}
+
+
+template <typename T>
+bool MinHeap<T>::IteratorBase::isPastStart() const noexcept
+{
+}
+
+
+template <typename T>
+bool MinHeap<T>::IteratorBase::isPastEnd() const noexcept
+{
+}
+
+
+template <typename T>
+MinHeap<T>::ConstIterator::ConstIterator(const MinHeap& mh) noexcept
+{
+}
+
+
+template <typename T>
+const T& MinHeap<T>::ConstIterator::value() const
+{
+}
+
+
+template <typename T>
+MinHeap<T>::Iterator::Iterator(MinHeap& mh) noexcept
+{
+}
+
+
+template <typename T>
+T& MinHeap<T>::Iterator::value() const
+{
+}
+
+
+template <typename T>
+void MinHeap<T>::Iterator::insertBefore(const T& value)
+{
+}
+
+
+template <typename T>
+void MinHeap<T>::Iterator::insertAfter(const T& value)
+{
+}
+
+
+template <typename T>
+void MinHeap<T>::Iterator::remove(bool moveToNextAfterward)
+{
+}
 
 
 #endif /* MINHEAP_HPP */
