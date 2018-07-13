@@ -226,13 +226,13 @@ private:
     //or left/right child exists
 
     //return the parent of the node at this particular index.
-    int parent(const int index) const;
+    int parent(const int& index) const;
 
     //return the left child of the node at this particular index.
-    int left(const int index) const;
+    int left(const int& index) const;
 
     //return the right child of the node at this particular index.
-    int right(const int index) const;
+    int right(const int& index) const;
 
     //build heap from initial values in vector (for constructor use)
     void build_heap();
@@ -243,20 +243,20 @@ private:
 
 
     //return the index of the smaller child at a given index
-    int smaller_child(const int index);
+    int smaller_child(const int& index);
 
     //percolate a node upwards
-    void sift_up(const int index);
+    void sift_up(const int& index);
 
     //percolate a node downwards
-    void sift_down(const int index);
+    void sift_down(const int& index);
 
     //return true if the index is within the heap
     //e.g. greater than/equal to 0 and less than heap size.
-    bool within_heap(const int index);
+    bool within_heap(const int& index);
 
     //return true if index == 0
-    bool is_root(const int index);
+    bool is_root(const int& index);
 
 
 
@@ -335,7 +335,7 @@ const T& MinHeap<T>::getMin() const
 template <typename T>
 void MinHeap<T>::removeMin()
 {
-    remove(0);
+    this->remove(0);
 }
 
 
@@ -392,7 +392,7 @@ int MinHeap<T>::height() const
 // From here, implement any private functions that may help you implement MinHeap
 
 template <typename T>
-int MinHeap<T>::parent(const int index) const
+int MinHeap<T>::parent(const int& index) const
 {
     if (index == 0)
         return -1;
@@ -400,7 +400,7 @@ int MinHeap<T>::parent(const int index) const
 }
 
 template <typename T>
-int MinHeap<T>::left(const int index) const
+int MinHeap<T>::left(const int& index) const
 {
     if (2 * index + 1 < heap.size())
         return 2 * index + 1;
@@ -408,7 +408,7 @@ int MinHeap<T>::left(const int index) const
 }
 
 template <typename T>
-int MinHeap<T>::right(const int index) const
+int MinHeap<T>::right(const int& index) const
 {
     if (2 * index + 2 < heap.size())
         return 2 * index + 2;
@@ -449,7 +449,7 @@ void MinHeap<T>::heapify(int index)
 
 
 template <typename T>
-int MinHeap<T>::smaller_child(const int index)
+int MinHeap<T>::smaller_child(const int& index)
 {
     if (left(index) == -1 && right(index) == -1)
         return -1;
@@ -460,7 +460,7 @@ int MinHeap<T>::smaller_child(const int index)
 }
 
 template <typename T>
-void MinHeap<T>::sift_up(const int index)
+void MinHeap<T>::sift_up(const int& index)
 {
     if (is_root(index) || index == -1)
         return;
@@ -472,7 +472,7 @@ void MinHeap<T>::sift_up(const int index)
 }
 
 template <typename T>
-void MinHeap<T>::sift_down(const int index)
+void MinHeap<T>::sift_down(const int& index)
 {
     if (within_heap(2 * index + 1))
     {
@@ -486,13 +486,13 @@ void MinHeap<T>::sift_down(const int index)
 }
 
 template <typename T>
-bool MinHeap<T>::within_heap(const int index)
+bool MinHeap<T>::within_heap(const int& index)
 {
     return index >= 0 && index < heap.size();
 }
 
 template <typename T>
-bool MinHeap<T>::is_root(const int index)
+bool MinHeap<T>::is_root(const int& index)
 {
     return index == 0;
 }
