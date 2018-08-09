@@ -6,18 +6,12 @@ set(GTEST_DIR "lib/googletest-master")
 add_subdirectory(${GTEST_DIR} build)
 include_directories(${GTEST_DIR}/include ${GTEST_DIR})
 include_directories(src test)
-
-
+file(GLOB SOURCES src/*.cpp)
+file(GLOB TESTS test/*.cpp)
 
 
 add_executable(ds_implementation
-        src/IteratorException.hpp
-        src/MinHeap.hpp
-        src/MinHeapException.hpp
-        src/MinPriorityQueue.hpp
-        test/main.cpp
-        test/MinHeap_Test.cpp
-        test/sample_test.cpp)
+        ${SOURCES} ${TESTS})
 
 
 target_link_libraries(ds_implementation gtest gtest_main)
